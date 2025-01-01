@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Auth Inbox</title>
+		<title>Email Access Settings</title>
 		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
 		<style>
 			body {
@@ -19,11 +19,45 @@
 			.container {
 				flex-grow: 1;
 			}
-			h1 {
+			h1,
+			h2 {
 				text-align: center;
 				color: #61dafb;
 				margin-bottom: 30px;
+			}
+			h1 {
 				font-size: 2.5em;
+			}
+			form {
+				max-width: 500px;
+				margin: 0 auto 40px;
+				padding: 20px;
+				background-color: #2a2a2a;
+				border-radius: 8px;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			}
+			form div {
+				margin-bottom: 15px;
+			}
+			input[type='email'] {
+				width: 100%;
+				padding: 8px;
+				border-radius: 4px;
+				border: 1px solid #444;
+				background-color: #333;
+				color: #fff;
+			}
+			button {
+				background-color: #61dafb;
+				color: #1a1a1a;
+				border: none;
+				padding: 10px 20px;
+				border-radius: 4px;
+				cursor: pointer;
+				font-weight: bold;
+			}
+			button:hover {
+				background-color: #4fa8c7;
 			}
 			.table-container {
 				overflow-x: auto;
@@ -77,15 +111,37 @@
 	</head>
 	<body>
 		<div class="container">
-			<h1>Auth Inbox</h1>
+			<h1>Email Access Settings</h1>
+			<form method="POST">
+				<div>
+					<label>Email: <input type="email" name="email" required /></label>
+				</div>
+				<div>
+					<label>
+						<input type="checkbox" name="is_private" checked />
+						Private (requires authentication)
+					</label>
+				</div>
+				<button type="submit">Save</button>
+			</form>
+
+			<h2>Current Settings</h2>
 			<div class="table-container">
 				<table>
-					{{TABLE_HEADERS}} {{DATA}}
+					<tr>
+						<th>Email</th>
+						<th>Access Type</th>
+					</tr>
+					{{SETTINGS_DATA}}
 				</table>
 			</div>
+			<p style="text-align: center; margin-top: 20px">
+				<a href="/">Back to Main Page</a>
+			</p>
 		</div>
 		<footer id="footer">
-			Coded By <a href="https://github.com/TooonyChen">github@TooonyChen</a>, <a href="https://github.com/wu5bocheng">github@wu5bocheng</a>
+			Coded By <a href="https://github.com/wu5bocheng">github@wu5bocheng</a> Appreciate
+			<a href="https://github.com/TooonyChen">github@TooonyChen</a>
 		</footer>
 	</body>
 </html>

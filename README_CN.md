@@ -32,27 +32,27 @@
 
 ## 使用的技术 🛠️
 
-- **Cloudflare Workers**: 无服务器平台，用于处理邮件处理和Web请求。
-- **Cloudflare D1**: Cloudflare的无服务器SQL数据库，用于存储邮件数据。
+- **Cloudflare Workers**: 无服务器平台，用于处理邮件处理和 Web 请求。
+- **Cloudflare D1**: Cloudflare 的无服务器 SQL 数据库，用于存储邮件数据。
 - **TypeScript**: 强类型编程语言，确保代码的稳健性和可维护性。
 - **AI 提示词优化**: 定制的提示确保从多种邮件格式中精确提取标题、代码和主题。
-- **Google AI Studio API**: 利用优化的AI提示从邮件中提取相关信息，以提升数据的准确性和可靠性。
+- **Google AI Studio API**: 利用优化的 AI 提示从邮件中提取相关信息，以提升数据的准确性和可靠性。
 - **Bark API**: 可选集成，用于发送实时通知。
 - **HTML/CSS**: 前端界面，具有响应式和现代化设计。
-- **Google Fonts**: 通过一致的排版增强Web界面的视觉吸引力。
-
+- **Google Fonts**: 通过一致的排版增强 Web 界面的视觉吸引力。
 
 ---
 
 ## AI 提示词优化 🧠
 
-为了确保从收到的电子邮件中准确提取信息，我们使用Google AI Studio API实施了AI提示优化。通过设计精确且具有上下文意识的提示，AI可以可靠地识别和提取关键要素，如：
+为了确保从收到的电子邮件中准确提取信息，我们使用 Google AI Studio API 实施了 AI 提示优化。通过设计精确且具有上下文意识的提示，AI 可以可靠地识别和提取关键要素，如：
 
 - **组织名称（标题）**: 识别发件人的组织或公司。
 - **验证码/链接**: 提取账户验证所需的代码、链接或密码。
 - **电子邮件主题**: 总结电子邮件的主要目的，例如“账户验证”或“密码重置”。
 
 **提示词如下:**
+
 ```plaintext
 Email content: [Insert raw email content here].
 
@@ -82,52 +82,54 @@ If there is no code, clickable link, or this is an advertisement email, return:
 ---
 
 ## 安装 ⚙️
+
 0. **先决条件**
 
-	- 创建一个 [Google AI Studio API](https://aistudio.google.com/)
+   - 创建一个 [Google AI Studio API](https://aistudio.google.com/)
 
-	- 在你的 [Cloudflare](https://dash.cloudflare.com/) 账户上绑定一个域名
+   - 在你的 [Cloudflare](https://dash.cloudflare.com/) 账户上绑定一个域名
 
-	  - 获取你的Cloudflare 账户 ID, 可在 [Cloudflare API Tokens](https://dash.cloudflare.com/profile/api-tokens) 中找到
+     - 获取你的 Cloudflare 账户 ID, 可在 [Cloudflare API Tokens](https://dash.cloudflare.com/profile/api-tokens) 中找到
 
-      - 获取你的 Cloudflare API Token，可在 [Cloudflare API Tokens](https://dash.cloudflare.com/profile/api-tokens) 中找到
+     - 获取你的 Cloudflare API Token，可在 [Cloudflare API Tokens](https://dash.cloudflare.com/profile/api-tokens) 中找到
 
-	- （可选）下载[Bark App](https://bark.day.app/)，在App中获得一个Bark Token
+   - （可选）下载[Bark App](https://bark.day.app/)，在 App 中获得一个 Bark Token
 
 1. **使用 Github Pages 进行安装**
 
-	1. **创建 D1 数据库**
+   1. **创建 D1 数据库**
 
-		1. 进入 [Cloudflare 仪表盘](https://dash.cloudflare.com/) -> `Workers & Pages` -> `D1 SQL Database` -> `Create`
+      1. 进入 [Cloudflare 仪表盘](https://dash.cloudflare.com/) -> `Workers & Pages` -> `D1 SQL Database` -> `Create`
 
-		2. 输入名称 `inbox-d1` 并点击 `Create`
+      2. 输入名称 `inbox-d1` 并点击 `Create`
 
-		3. 创建 `inbox-d1` 后，点击进入并找到 `Console`
+      3. 创建 `inbox-d1` 后，点击进入并找到 `Console`
 
-		4. 在控制台中执行 [db/schema.sql](https://github.com/TooonyChen/AuthInbox/blob/main/db/schema.sql) 中的 SQL 命令，直接复制、粘贴并执行它。
+      4. 在控制台中执行 [db/schema.sql](https://github.com/TooonyChen/AuthInbox/blob/main/db/schema.sql) 中的 SQL 命令，直接复制、粘贴并执行它。
 
-		5. 复制 `database_id` 和 `database_name`，用于下一步配置 `TOML` 文件时使用
+      5. 复制 `database_id` 和 `database_name`，用于下一步配置 `TOML` 文件时使用
 
-	2. **部署 Cloudflare Worker**
+   2. **部署 Cloudflare Worker**
 
-		[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/TooonyChen/AuthInbox)
+      [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/TooonyChen/AuthInbox)
 
-		1. 点击上方按钮 fork 此仓库，或直接 fork 此仓库。
+      1. 点击上方按钮 fork 此仓库，或直接 fork 此仓库。
 
-		2. 打开你 fork 的仓库，找到 `Actions` 页面，找到 `Deploy Auth Inbox to Cloudflare Workers`，并点击 `enable workflow` 激活 workflow。
+      2. 打开你 fork 的仓库，找到 `Actions` 页面，找到 `Deploy Auth Inbox to Cloudflare Workers`，并点击 `enable workflow` 激活 workflow。
 
-		3. 然后，在仓库页面中，导航到 `Settings` -> `Secrets and variables` -> `Actions` -> `Repository secrets`，并添加以下 secrets：
-			- `CLOUDFLARE_ACCOUNT_ID`: Cloudflare 账户 ID。
-			- `CLOUDFLARE_API_TOKEN`: Cloudflare API Token。
-			- `TOML`: 配置文件，参考 [带有注释的wrangler.toml](https://github.com/TooonyChen/AuthInbox/blob/main/wrangler.toml.example)。**添加至secrets时，请使用[不带注释的版本](https://github.com/TooonyChen/AuthInbox/blob/main/wrangler.toml.example.clear)来避免奇怪的报错。**
+      3. 然后，在仓库页面中，导航到 `Settings` -> `Secrets and variables` -> `Actions` -> `Repository secrets`，并添加以下 secrets：
 
-		4. 返回你仓库的 `Actions` 页面，找到 `Deploy Auth Inbox to Cloudflare Workers`，并按 `Run workflow` 来部署 worker。如果没找到 `Run workflow` 按钮，请你随便修改一下repo中的`readme.md`文件，让Github Actions自动运行。
+         - `CLOUDFLARE_ACCOUNT_ID`: Cloudflare 账户 ID。
+         - `CLOUDFLARE_API_TOKEN`: Cloudflare API Token。
+         - `TOML`: 配置文件，参考 [带有注释的 wrangler.toml](https://github.com/TooonyChen/AuthInbox/blob/main/wrangler.toml.example)。**添加至 secrets 时，请使用[不带注释的版本](https://github.com/TooonyChen/AuthInbox/blob/main/wrangler.toml.example.clear)来避免奇怪的报错。**
 
-		5. 部署成功后，你可以在 `Deploy Auth Inbox to Cloudflare Workers` 的 workflow 日志中找到你的 worker URL。
+      4. 返回你仓库的 `Actions` 页面，找到 `Deploy Auth Inbox to Cloudflare Workers`，并按 `Run workflow` 来部署 worker。如果没找到 `Run workflow` 按钮，请你随便修改一下 repo 中的`readme.md`文件，让 Github Actions 自动运行。
 
-		6. 在 workflow 日志页面的右上角找到 `delete all logs` 来删除日志，删除它来避免数据外泄。
+      5. 部署成功后，你可以在 `Deploy Auth Inbox to Cloudflare Workers` 的 workflow 日志中找到你的 worker URL。
 
-		7. 完成！✅ 请前往第三步：设置邮件转发。
+      6. 在 workflow 日志页面的右上角找到 `delete all logs` 来删除日志，删除它来避免数据外泄。
+
+      7. 完成！✅ 请前往第三步：设置邮件转发。
 
 2. **使用 Wrangler 命令行部署到 Cloudflare Workers**
 
@@ -148,7 +150,9 @@ If there is no code, clickable link, or this is an advertisement email, return:
       npx wrangler d1 create inbox-d1 # 创建名为 'inbox-d1' 的 d1 数据库
       npx wrangler d1 execute inbox-d1 --remote --file=./db/schema.sql # 执行 schema.sql 文件
       ```
+
       你将会看到如下结果：
+
       ```bash
       ✅ Successfully created DB 'inbox-d1'
 
@@ -157,6 +161,7 @@ If there is no code, clickable link, or this is an advertisement email, return:
       database_name = "inbox-d1"
       database_id = "<你的数据库的唯一ID>"
       ```
+
       请从终端复制结果，你将在下一步中使用它们。
 
    3. **配置环境变量**
@@ -184,13 +189,17 @@ If there is no code, clickable link, or this is an advertisement email, return:
    4. **部署你的 worker** 🌐
 
    部署你的 Worker 以使项目在互联网上可访问。运行以下命令：
+
    ```bash
    npx wrangler deploy
    ```
+
    你将看到如下输出：
+
    ```
    output: https://auth-inbox.<你的子域名>.workers.dev
    ```
+
    你现在可以访问该 URL 来查看你部署的 Auth Inbox 的邮件面板。
 
 3. **设置邮件转发** ✉️
@@ -209,6 +218,12 @@ If there is no code, clickable link, or this is an advertisement email, return:
 
 ---
 
+## 开发 🧑‍💻
+
+使用 `npx wrangler dev --remote` 来启动开发服务器
+
+---
+
 ## 许可证 📜
 
 本项目基于 [MIT License](LICENSE) 许可证。
@@ -218,7 +233,6 @@ If there is no code, clickable link, or this is an advertisement email, return:
 ## 截图 📸
 
 ![image](https://github.com/user-attachments/assets/41db550c-8340-4315-ba87-85330abc5dfb)
-
 
 ---
 
@@ -231,13 +245,13 @@ If there is no code, clickable link, or this is an advertisement email, return:
 - 感谢 **ChatGPT** 协助我写代码
 
 ---
+
 ## TODO 📝
 
 - [x] **Github Pages 部署**：通过 Github Actions 自动部署到 Cloudflare Workers。
 - [ ] **正则表达式**：使用正则表达式替代 Google Gemini AI 以保护隐私，并将使用 AI 作为一个可选功能。
 - [ ] **多用户支持**：增加管理多用户的功能，以提高灵活性并扩展使用范围。
-- [ ] **增强前端设计**：改进网页界面的UI/UX设计，使其更加现代化和用户友好。
-- [ ] **API**: 添加API接口。
+- [ ] **增强前端设计**：改进网页界面的 UI/UX 设计，使其更加现代化和用户友好。
+- [ ] **API**: 添加 API 接口。
 - [ ] **发送邮件**：添加发送邮件功能。
-- [ ] **更多通知方式**：支持更多通知方式，如邮件、Slack等。
-
+- [ ] **更多通知方式**：支持更多通知方式，如邮件、Slack 等。
